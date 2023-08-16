@@ -3,6 +3,7 @@ import './App.css';
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
+import Button from './components/Button/Button';
 
 class App extends Component {
 
@@ -27,8 +28,9 @@ class App extends Component {
     return <div className='App'>
       <Searchbar onSubmit={this.submitHandler} />
       <ImageGallery>
-          <ImageGalleryItem items="arr" />
+          <ImageGalleryItem items="" />
       </ImageGallery>
+          <Button />
     </div>
   }
 }
