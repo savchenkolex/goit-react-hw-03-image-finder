@@ -6,7 +6,10 @@ import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
 import Button from './components/Button/Button';
 
 class App extends Component {
-
+  state = {
+    data: [], 
+    loading: true,
+  }
 
 
   submitHandler = event => {
