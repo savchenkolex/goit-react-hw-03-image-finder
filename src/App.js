@@ -5,6 +5,7 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
 import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
+import Loader from './components/Loader/Loader';
 
 class App extends Component {
   state = {
@@ -36,6 +37,7 @@ class App extends Component {
       </ImageGallery>
           <Button />
           <Modal />
+          <Loader />
     </div>
   }
 }
