@@ -10,7 +10,7 @@ import Loader from './components/Loader/Loader';
 
 class App extends Component {
   state = {
-    query: 'sexy',
+    query: 'stars',
     page: 1,
     hits: [],
     loading: false,
@@ -73,7 +73,7 @@ class App extends Component {
   showModal = event => {
   
   if (event.type === "keydown") {
-    this.setState(pervState => {return {modal:{isOpen: !pervState.isOpen}}})
+    this.setState({modal:{isOpen: false}});
     
     return;
   }
@@ -96,6 +96,7 @@ class App extends Component {
   };
 
   render() {
+    
     return (
       <div className="App">
         <Searchbar onSubmit={this.submitHandler} />
