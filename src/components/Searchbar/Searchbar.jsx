@@ -1,5 +1,6 @@
 import css from './Searchbar.module.css';
 
+
 export default function Searchbar({ onSubmit }) {
   return (
     <header className={css.Searchbar}>
@@ -14,6 +15,7 @@ export default function Searchbar({ onSubmit }) {
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
+          
         />
       </form>
     </header>
