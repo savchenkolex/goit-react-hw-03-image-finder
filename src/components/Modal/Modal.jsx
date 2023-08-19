@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import css from './Modal.module.css';
 
 export default class Modal extends Component {
-  // {image, alt, showModal}
-
+  
   componentDidMount () {
     document.addEventListener('keydown', event => {
       if(event.code === "Escape") {
