@@ -10,7 +10,7 @@ import Loader from './components/Loader/Loader';
 
 class App extends Component {
   state = {
-    query: 'stars',
+    query: '',
     page: 1,
     hits: [],
     loading: false,
@@ -22,7 +22,21 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    this.updateGallery();
+    const api_key = 'oTpGYcGETKl8OgIbtoQhMg==5wEGz7pxuevLFvhb';
+    fetch("https://api.api-ninjas.com/v1/randomword",{headers: {
+      "X-Api-Key": api_key,
+    }}).then((response) =>{
+      if(!response.ok) {
+        throw new Error('${response.status');
+      }
+      return response.json();
+    }).then((response)=>{
+
+      this.setState({query: response.word});
+    }).catch((error)=>{
+      console.error(error);
+    }) 
+
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -35,8 +49,12 @@ class App extends Component {
   submitHandler = event => {
     event.preventDefault();
     const { value } = event.currentTarget[1];
-    this.setState({ query: value, hits: [], page: 1 });
   };
+  
+  setNewQuery = (value) => {
+    
+    this.setState({ query: value, hits: [], page: 1 });
+  }
 
   async updateGallery() {
     this.setState({ loading: true });
@@ -45,29 +63,32 @@ class App extends Component {
       const {
         data: { hits, total },
       } = await getImages(this.state.query, this.state.page);
-
-      if (
-        this.state.hits.length > 0 &&
-        hits.some((e, i) => e.id !== this.state.hits[i].id)
-      ) {
+        console.log(hits);
+      // if (
+      //   this.state.hits.length > 0 &&
+      //   hits.some((e, i) => e.id !== this.state.hits[i].id)
+      // ) {
         this.setState(pervState => {
           return {
             loading: false,
             hits: [...pervState.hits, ...hits],
-          };
-        });
-      } else {
-        this.setState(pervState => {
-          return {
-            loading: false,
             maxPages: total / 12,
-            hits: hits,
           };
         });
-      }
+      // } else {
+      //   this.setState(pervState => {
+      //     return {
+      //       loading: false,
+      //       maxPages: total / 12,
+      //       hits: hits,
+      //     };
+      //   });
+      // }
     } catch (error) {
       console.error(error);
     }
+
+
   }
 
   showModal = event => {
@@ -90,6 +111,7 @@ class App extends Component {
   };
 
   loadMoreImages = () => {
+    console.log(this.state.query);
     this.setState(pervState => {
       return { page: pervState.page + 1 };
     });
