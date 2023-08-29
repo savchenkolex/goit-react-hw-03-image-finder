@@ -52,14 +52,14 @@ class App extends Component {
     }
   }
 
-  showModal = event => {
+  showModal = (img, alt) => {
 
     this.setState(pervState => {
       return {
         modal: {
           isOpen: !pervState.modal.isOpen,
-          image: event.target.dataset.bigimg,
-          alt: event.target.alt,
+          image: img,
+          alt: alt,
         },
       };
     });
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   loadMoreImages = () => {
-    console.log(this.state.query);
+    
     this.setState(pervState => {
       return { page: pervState.page + 1 };
     });

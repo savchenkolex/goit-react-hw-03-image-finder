@@ -6,7 +6,7 @@ export default function ImageGalleryItem({ items, showModal }) {
     return (
       <li key={item.id} className={css.ImageGalleryItem}>
         <img
-          onClick={showModal}
+          onClick={()=>{showModal(item.largeImageURL, item.tags)}}
           data-bigimg={item.largeImageURL}
           className={css['ImageGalleryItem-image']}
           src={item.webformatURL}

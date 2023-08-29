@@ -19,16 +19,16 @@ export default class Modal extends Component {
 
   componentDidMount () {
     document.addEventListener('keydown', this.modalKeyboardHandler);
-    document.addEventListener('click', this.modalMouseHandler);
+    
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.modalKeyboardHandler);
-    document.removeEventListener('click', this.modalMouseHandler);
+   
   }
   render() {
     return (
-      <div className={css.Overlay} onClick={this.props.showModal}>
+      <div className={css.Overlay} onClick={this.modalMouseHandler}>
         <div className={css.Modal}>
           <img src={this.props.image} alt={this.props.alt} />
           <div><p>{this.props.alt}</p></div>
