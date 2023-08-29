@@ -21,24 +21,6 @@ class App extends Component {
     },
   };
 
-  async componentDidMount() {
-    const api_key = 'oTpGYcGETKl8OgIbtoQhMg==5wEGz7pxuevLFvhb';
-    fetch("https://api.api-ninjas.com/v1/randomword",{headers: {
-      "X-Api-Key": api_key,
-    }}).then((response) =>{
-      if(!response.ok) {
-        throw new Error('${response.status');
-      }
-      return response.json();
-    }).then((response)=>{
-
-      this.setState({query: response.word});
-    }).catch((error)=>{
-      console.error(error);
-    }) 
-
-  }
-
   async componentDidUpdate(prevProps, prevState) {
     const { page, query } = this.state;
     if (page !== prevState.page || query !== prevState.query) {
@@ -46,15 +28,9 @@ class App extends Component {
     }
   }
 
-  submitHandler = event => {
-    event.preventDefault();
-    const { value } = event.currentTarget[1];
-  };
-  
-  setNewQuery = (value) => {
-    
+  setNewQuery = value => {
     this.setState({ query: value, hits: [], page: 1 });
-  }
+  };
 
   async updateGallery() {
     this.setState({ loading: true });
@@ -63,41 +39,20 @@ class App extends Component {
       const {
         data: { hits, total },
       } = await getImages(this.state.query, this.state.page);
-        console.log(hits);
-      // if (
-      //   this.state.hits.length > 0 &&
-      //   hits.some((e, i) => e.id !== this.state.hits[i].id)
-      // ) {
-        this.setState(pervState => {
-          return {
-            loading: false,
-            hits: [...pervState.hits, ...hits],
-            maxPages: total / 12,
-          };
-        });
-      // } else {
-      //   this.setState(pervState => {
-      //     return {
-      //       loading: false,
-      //       maxPages: total / 12,
-      //       hits: hits,
-      //     };
-      //   });
-      // }
+
+      this.setState(pervState => {
+        return {
+          loading: false,
+          hits: [...pervState.hits, ...hits],
+          maxPages: total / 12,
+        };
+      });
     } catch (error) {
       console.error(error);
     }
-
-
   }
 
   showModal = event => {
-  
-  if (event.type === "keydown") {
-    this.setState({modal:{isOpen: false}});
-    
-    return;
-  }
 
     this.setState(pervState => {
       return {
@@ -108,7 +63,11 @@ class App extends Component {
         },
       };
     });
-  };
+  }
+
+  closeModal = () => {
+    this.setState({ modal: { isOpen: false } });
+  }
 
   loadMoreImages = () => {
     console.log(this.state.query);
@@ -118,10 +77,9 @@ class App extends Component {
   };
 
   render() {
-    
     return (
       <div className="App">
-        <Searchbar onSubmit={this.submitHandler} />
+        <Searchbar queryHandler={this.setNewQuery} />
         {this.state.hits.length !== 0 && (
           <ImageGallery>
             <ImageGalleryItem
@@ -139,7 +97,7 @@ class App extends Component {
           <Modal
             image={this.state.modal.image}
             alt={this.state.modal.alt}
-            showModal={this.showModal}
+            closeModal={this.closeModal}
           />
         )}
       </div>

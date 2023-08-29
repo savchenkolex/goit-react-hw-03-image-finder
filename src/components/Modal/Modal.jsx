@@ -4,12 +4,27 @@ import css from './Modal.module.css';
 
 export default class Modal extends Component {
   
+  modalKeyboardHandler = (event) => {
+    if(event.code === "Escape") {
+      this.props.closeModal();
+    }
+  } 
+
+  modalMouseHandler = (event) => {
+    if(event.target.nodeName === "IMG"){
+      return;
+    }
+    this.props.closeModal();
+  }
+
   componentDidMount () {
-    document.addEventListener('keydown', event => {
-      if(event.code === "Escape") {
-        this.props.showModal(event)
-      }  
-    })
+    document.addEventListener('keydown', this.modalKeyboardHandler);
+    document.addEventListener('click', this.modalMouseHandler);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.modalKeyboardHandler);
+    document.removeEventListener('click', this.modalMouseHandler);
   }
   render() {
     return (
@@ -25,7 +40,7 @@ export default class Modal extends Component {
 
 
 Modal.propTypes = {
-  showModal: PropTypes.func,
+  closeModal: PropTypes.func,
   image: PropTypes.string,
   alt: PropTypes.string,
 }
